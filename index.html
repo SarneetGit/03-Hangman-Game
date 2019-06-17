@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="assets/css/style.css" type="text/CSS">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Word-Guess-Game!</title>
+</head>
+<body>
+    <h1>Word-Guess-Game</h1>
+
+    <p id="gameStatus">Press any Key to Begin</p>
+
+    <p>Current Word</p>
+
+    <p id="wordProgress">You can't guess this!</p>
+
+    <script>
+    //Variable Initialization
+    var globalWord = getWord()
+    var triesLeft = 10
+    
+    console.log(globalWord)
+
+    // List of Words (More to come haha)
+    var words = ["Raptors", "Pineapple", "Drake", "Javascript", "Crocodile", "Pikachu", "Labrador", "California", "Instagram", "Tranquility"]
+    
+    //Randomly select word for current game
+    function getWord() {
+        var wordIndex = Math.floor(Math.random() * 10);
+        var word = words[wordIndex]
+        return word
+    }
+    
+    //Update the Progression of the player
+    function updateWord() {        
+        var str = ("_ ");
+        var strCorlength = str.repeat(globalWord.length)
+        var progress = strCorlength.slice(0, -1)
+
+        document.querySelector("#wordProgress").innerHTML = progress
+    }
+
+
+    getWord()
+    updateWord()
+    
+    </script>
+
+
+
+</body>
+</html>
