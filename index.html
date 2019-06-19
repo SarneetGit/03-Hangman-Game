@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="assets/css/style.css" type="text/CSS">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>Word-Guess-Game!</title>
 </head>
+
 <body>
     <h1>Word-Guess-Game</h1>
 
@@ -17,39 +20,105 @@
 
     <p id="wordProgress">You can't guess this!</p>
 
+    <p>You have guessed the following letters:</p>
+
+    <p id="guesses"></p>
+
     <script>
-    //Variable Initialization
-    var globalWord = getWord()
-    var triesLeft = 10
-    
-    console.log(globalWord)
 
-    // List of Words (More to come haha)
-    var words = ["Raptors", "Pineapple", "Drake", "Javascript", "Crocodile", "Pikachu", "Labrador", "California", "Instagram", "Tranquility"]
-    
-    //Randomly select word for current game
-    function getWord() {
-        var wordIndex = Math.floor(Math.random() * 10);
-        var word = words[wordIndex]
-        return word
-    }
-    
-    //Update the Progression of the player
-    function updateWord() {        
-        var str = ("_ ");
-        var strCorlength = str.repeat(globalWord.length)
-        var progress = strCorlength.slice(0, -1)
+        // List of Words (More to come haha)
 
-        document.querySelector("#wordProgress").innerHTML = progress
-    }
+        var words = ["Raptors", "Pineapple", "Drake", "Javascript", "Crocodile", "Pikachu", "Labrador", "California", "Instagram", "Tranquility"]
+        var guesses = []
+
+        //Randomly select word for current game
+
+        function getWord() {
+            var wordIndex = Math.floor(Math.random() * 10);
+            var word = words[wordIndex]
+            return word
+        }
+
+        //Choose word for game
+
+        var globalWord = getWord()
+
+        //Break the word into a List
+        function getList() {
+            aList = globalWord.split("")
+            return aList
+        }
+        
+        //Assign to global list
+        var globalList = getList
 
 
-    getWord()
-    updateWord()
+        //Update the board to reflect the number of letters in the word to be guessed
+
+        function wordProgress() {
+            globalList = globalWord.split("")
+            if (globalList.indexOf(char.key) >= 0) 
+            
+
+
+
+
+            var str = ("_ ");
+            var strCorlength = str.repeat(globalWord.length)
+            var progress = strCorlength.slice(0, -1)
+            document.querySelector("#wordProgress").innerHTML = progress
+        }
+
+        function showProgress () {}
+
+        //Create a string that contains all the guesses with a space denomination
+        function getGuesses() {
+            var string = ""
+            for (var i = 0; i < guesses.length; i++) {
+                if (guesses[i].length > 0) {
+                    string = string + guesses[i] + " "
+                }
+            }
+            return string
+        }
+
+        //Accepting characters and adding them to a list also will be main processing code
+        document.onkeyup = function (char) {
+            //lol 
+            if (char.key !== 'Enter' && char.key !== 'Backspace' && char.key !== 'Pause'	&& char.key !== 'ScrollLock' && char.key !== 'Escape' && char.key !== 'Shift' && char.key !== 'CapsLock'	&& char.key !== 'Tab'	&& char.key !== 'Control' && char.key !== 'Alt' && char.key !== 'Meta' && char.key !== 'ContextMenu' && char.key !== 'F1' && char.key !== 'F2'	&& char.key !== 'F3'	&& char.key !== 'F4'	&& char.key !== 'F5'	&& char.key !== 'F6'	&& char.key !== 'F7'	&& char.key !== 'F8'	&& char.key !== 'F9'	&& char.key !== 'F10'	&& char.key !== 'F11'	&& char.key !== 'F12'	&& char.key !== ','	&& char.key !== '.'	&& char.key !== ';'	&& char.key !== '\''	&& char.key !== '\\'	&& char.key !== '['	&& char.key !== ']'	&& char.key !== '='	&& char.key !== '-'	&& char.key !== '`'	&& char.key !== '/'	&& char.key !== '!'	&& char.key !== '@'	&& char.key !== '#'	&& char.key !== '$'	&& char.key !== '%'	&& char.key !== '^'	&& char.key !== '&'	&& char.key !== '*'	&& char.key !== '('	&& char.key !== ')'	&& char.key !== '~') 
+            {
+                if (guesses.indexOf(char.key) < 0) {
+                    guesses.push(char.key)
+                    document.querySelector("#gameStatus").innerHTML = "Game is LIVE. Good Luck!"
+                    document.querySelector("#guesses").innerHTML = getGuesses()
+                }
+                else {
+                    window.alert("Bro are you dumb?")
+                    return false
+                }
+            }
+        }
+
     
+
+        // startingWord()
+
+        // function tbd(char) {
+        //    globalList = globalWord.split("")
+        //    if (globalList.indexOf(char.key) >= 0) {
+            
+        //    }
+
+        //    console.log(myList)
+
+        // }
+
+        // tbd()
+
     </script>
 
 
 
 </body>
+
 </html>
