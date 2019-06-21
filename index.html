@@ -12,19 +12,30 @@
     </head>
     
     <body>
-        <h1>Word-Guess-Game</h1>
+
+        <div id = "cont1" class="card mx-auto border-dark" style="width: 18rem;">
+            <div class="card-body">
+                <h1>Hang Man</h1>
+                <br>
+                
+                <p id="gameStatus">Press any Key to Begin</p>   
+                
+                <div class="tenor-gif-embed" data-postid="11437059" data-share-method="host" data-width="100%" data-aspect-ratio="1.0"><a href="https://tenor.com/view/rabbit-hang-dead-death-gif-11437059">Rabbit Hang GIF</a> from <a href="https://tenor.com/search/rabbit-gifs">Rabbit GIFs</a></div><script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+
+                <div class="jumbotron border-dark" id="jumbo">                    
+                    <p>Current Word</p>                    
+                    <p id="applyGuess">You can't guess this!</p>
+                    <p id="guessesRemaining">You have 7 guesses to finish the word.</p>                    
+                    <hr class="my-4">
+                    <p>You have guessed the following letters:</p>                    
+                    <p id="guesses"></p>                        
+                </div>
+            </div>
+        </div>
         
-        <p id="gameStatus">Press any Key to Begin</p>
         
-        <p>Current Word</p>
-        
-        <p id="applyGuess">You can't guess this!</p>
-        
-        <p id="guessesRemaining">You have 7 guesses to finish the word.</p>
-        
-        <p>You have guessed the following letters:</p>
-        
-        <p id="guesses"></p>
+
+        <img src="./assets/images/Hangman-0.png" alt="hangman">
         
         <script>
 
@@ -116,12 +127,12 @@
             if (globalHiddenlist.indexOf(" _ ") < 0 && guessesCount > 0) {
                 document.querySelector("#gameStatus").innerHTML = "YOU WON!"
                 isGameon = false
-                playAgain()
+                //playAgain()
             }
             else if (guessesCount == 0) {
                 document.querySelector("#gameStatus").textContent = "You Lost, hold this L"
                 isGameon = false
-                playAgain()
+                //playAgain()
             }
         }
 
@@ -160,6 +171,9 @@
                     else {
                         window.alert("Bro are you dumb?")
                     }
+                }
+                else if (isGameon === false) {
+                    playAgain()
                 }
             }
     </script>
