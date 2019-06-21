@@ -8,29 +8,41 @@
     <link rel="stylesheet" href="assets/css/style.css" type="text/CSS">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <title>Word-Guess-Game!</title>
-</head>
+        <title>Word-Guess-Game!</title>
+    </head>
+    
+    <body>
+        <h1>Word-Guess-Game</h1>
+        
+        <p id="gameStatus">Press any Key to Begin</p>
+        
+        <p>Current Word</p>
+        
+        <p id="applyGuess">You can't guess this!</p>
+        
+        <p id="guessesRemaining">You have 7 guesses to finish the word.</p>
+        
+        <p>You have guessed the following letters:</p>
+        
+        <p id="guesses"></p>
+        
+        <script>
 
-<body>
-    <h1>Word-Guess-Game</h1>
-
-    <p id="gameStatus">Press any Key to Begin</p>
-
-    <p>Current Word</p>
-
-    <p id="wordProgress">You can't guess this!</p>
-
-    <p id="guessesRemaining">You have 7 guesses to finish the word.</p>
-
-    <p>You have guessed the following letters:</p>
-
-    <p id="guesses"></p>
-
-    <script>
-        // List of Words (More to come haha)
+        //List of Words (More to come haha)
         var words = ["Raptors", "Pineapple", "Drake", "Javascript", "Crocodile", "Pikachu", "Labrador", "California", "Instagram", "Tranquility"]
+        
+        //List to hold my guessess
         var guesses = []
 
+        //Starting Guesses
+        var guessesCount = 7
+
+        //Starting wrong guesses
+        var badGuessess = 0
+
+        //Set Game On
+        var isGameon = true
+        
         //Randomly select word for current game
         function getWord() {
             var wordIndex = Math.floor(Math.random() * 10);
@@ -50,36 +62,37 @@
         //Assign to global list
         var globalList = getList()
 
-        console.log(globalList)
-
-        //Create Starting List that contains length of globalWord
+        //Create Starting List that is the length of the word * _
         function startingWord() {
             var str = (" _ ")
             var anotherList = []
             globalList.forEach(function(){
                 anotherList.push(str)
             })
-            // console.log(anotherList)
-            document.querySelector("#wordProgress").innerHTML = anotherList
+            var stringDisplay = ""
+            anotherList.forEach(function(item){
+                stringDisplay += item
+            })
+            document.querySelector("#applyGuess").innerHTML = stringDisplay
             return anotherList
         }
 
-        var globalHiddenlist = startingWord()
-        
-
-
+        //Assign list to variable
+        var globalHiddenlist = startingWord()      
 
         //Update the board to reflect the number of letters in the word to be guessed
-        function wordProgress(char) {
+        function applyGuess(char) {
             for (var i = 0;i < globalList.length; i++) {
                 if (globalList[i] == char.key) {
-                globalHiddenlist[i] = char.key.toUpperCase()            
-                document.querySelector("#wordProgress").innerHTML = globalHiddenlist
+                globalHiddenlist[i] = char.key.toUpperCase()
+                var stringDisplay = ""
+                globalHiddenlist.forEach(function(item){
+                    stringDisplay += item
+                })
+                document.querySelector("#applyGuess").innerHTML = stringDisplay
                 }
             }
-        }
-
-        
+        }        
 
         //Create a string that contains all the guesses with a space denomination
         function getGuesses() {
@@ -92,15 +105,13 @@
             return string
         }
 
-        var guessesCount = 7
-        var badGuessess = 0
-        var isGameon = true
-
+        //Calculate guessess remaining and update element
         function guessesRemaining() {
             guessesCount = 7 - badGuessess
             document.querySelector("#guessesRemaining").innerHTML = "You have " + guessesCount + " remaining."
         }
 
+        //Check if player has won or lost
         function checkWin() {
             if (globalHiddenlist.indexOf(" _ ") < 0 && guessesCount > 0) {
                 document.querySelector("#gameStatus").innerHTML = "YOU WON!"
@@ -108,11 +119,13 @@
                 playAgain()
             }
             else if (guessesCount == 0) {
+                document.querySelector("#gameStatus").textContent = "You Lost, hold this L"
                 isGameon = false
                 playAgain()
             }
         }
 
+        //If player has lost prompt them to play again
         function playAgain () {
             var yesno = prompt("Would you like to play again: Yes/No Y/N")
             if (yesno.toLowerCase === "yes" || yesno.toLowerCase === "y") {
@@ -120,18 +133,22 @@
             }
         }
 
+        //Check if guesss is in guesses list
+        function guessExist(char) {
+            if (guesses.indexOf(char.key) < 0){
+                return true
+            }
+        }
+        
 
-        //Accepting characters and adding them to a list also will be main processing code
-        //while (globalHiddenlist.indexOf(" _ ") !== -1) {
+        //MAIN PROCESSING CODE
             document.onkeyup = function (char) {
                 //lol 
-                if (isGameon && char.key !== 'Enter' && char.key !== 'Backspace' && char.key !== 'Pause' && char.key !== 'ScrollLock' && char.key !== 'Escape' && char.key !== 'Shift' && char.key !== 'CapsLock'	&& char.key !== 'Tab'	&& char.key !== 'Control' && char.key !== 'Alt' && char.key !== 'Meta' && char.key !== 'ContextMenu' && char.key !== 'F1' && char.key !== 'F2'	&& char.key !== 'F3'	&& char.key !== 'F4'	&& char.key !== 'F5'	&& char.key !== 'F6'	&& char.key !== 'F7'	&& char.key !== 'F8'	&& char.key !== 'F9'	&& char.key !== 'F10'	&& char.key !== 'F11'	&& char.key !== 'F12'	&& char.key !== ','	&& char.key !== '.'	&& char.key !== ';'	&& char.key !== '\''	&& char.key !== '\\'	&& char.key !== '['	&& char.key !== ']'	&& char.key !== '='	&& char.key !== '-'	&& char.key !== '`'	&& char.key !== '/'	&& char.key !== '!'	&& char.key !== '@'	&& char.key !== '#'	&& char.key !== '$'	&& char.key !== '%'	&& char.key !== '^'	&& char.key !== '&'	&& char.key !== '*'	&& char.key !== '('	&& char.key !== ')'	&& char.key !== '~') 
-                
+                if (isGameon && char.key !== 'Enter' && char.key !== 'Backspace' && char.key !== 'Pause' && char.key !== 'ScrollLock' && char.key !== 'Escape' && char.key !== 'Shift' && char.key !== 'CapsLock'	&& char.key !== 'Tab'	&& char.key !== 'Control' && char.key !== 'Alt' && char.key !== 'Meta' && char.key !== 'ContextMenu' && char.key !== 'F1' && char.key !== 'F2'	&& char.key !== 'F3'	&& char.key !== 'F4'	&& char.key !== 'F5'	&& char.key !== 'F6'	&& char.key !== 'F7'	&& char.key !== 'F8'	&& char.key !== 'F9'	&& char.key !== 'F10'	&& char.key !== 'F11'	&& char.key !== 'F12'	&& char.key !== ','	&& char.key !== '.'	&& char.key !== ';'	&& char.key !== '\''	&& char.key !== '\\'	&& char.key !== '['	&& char.key !== ']'	&& char.key !== '='	&& char.key !== '-'	&& char.key !== '`'	&& char.key !== '/'	&& char.key !== '!'	&& char.key !== '@'	&& char.key !== '#'	&& char.key !== '$'	&& char.key !== '%'	&& char.key !== '^'	&& char.key !== '&'	&& char.key !== '*'	&& char.key !== '('	&& char.key !== ')'	&& char.key !== '~')                 
                 {   
-                    wordProgress(char)
-                    //&& globalList.indexOf(char.key) < 0
-                    if (guesses.indexOf(char.key) < 0) {
-                        if (guesses.indexOf(char.key) < 0 && globalList.indexOf(char.key) < 0) {
+                    applyGuess(char)
+                    if (guessExist(char)) {
+                        if (guessExist(char) && globalList.indexOf(char.key) < 0) {
                             badGuessess ++
                         }
                         guesses.push(char.key)
@@ -139,25 +156,13 @@
                         document.querySelector("#guesses").innerHTML = getGuesses()
                         guessesRemaining()
                         checkWin()
-                    }
+                        }                    
                     else {
                         window.alert("Bro are you dumb?")
-                        return false
                     }
                 }
             }
-        //}
-        // function tbd(char) {
-        //    globalList = globalWord.split("")
-        //    if (globalList.indexOf(char.key) >= 0) {
-            
-        //    }
-        //    console.log(myList)
-        // }
-        // tbd()
     </script>
-
-
 
 </body>
 
