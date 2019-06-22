@@ -12,9 +12,11 @@
     </head>
     
     <body>
+        <br><br><br><br><br>
         <div class="container">
             <div class="row text-center">
                 <div class="col-4 mx-auto">
+                    <br><br><br><br>
                     <img src="" alt="" class="container-fluid" id="img">
                 </div>
                 <div class="col-4">
@@ -153,7 +155,7 @@
             }
             else if (guessesCount == 0) {
                 document.querySelector("#gameStatus").textContent = "You Lost, hold this L"
-                document.getElementById("imgL").src = "./assets/images/L.jpg"
+                //document.getElementById("imgL").src = "./assets/images/L.jpg"
                 endWord()
                 isGameon = false
             }
@@ -177,22 +179,20 @@
 
         //MAIN PROCESSING CODE
             document.onkeyup = function (char) {
-                //lol 
-                if (isGameon && char.key !== 'Enter' && char.key !== 'Backspace' && char.key !== 'Pause' && char.key !== 'ScrollLock' && char.key !== 'Escape' && char.key !== 'Shift' && char.key !== 'CapsLock'	&& char.key !== 'Tab'	&& char.key !== 'Control' && char.key !== 'Alt' && char.key !== 'Meta' && char.key !== 'ContextMenu' && char.key !== 'F1' && char.key !== 'F2'	&& char.key !== 'F3'	&& char.key !== 'F4'	&& char.key !== 'F5'	&& char.key !== 'F6'	&& char.key !== 'F7'	&& char.key !== 'F8'	&& char.key !== 'F9'	&& char.key !== 'F10'	&& char.key !== 'F11'	&& char.key !== 'F12'	&& char.key !== ','	&& char.key !== '.'	&& char.key !== ';'	&& char.key !== '\''	&& char.key !== '\\'	&& char.key !== '['	&& char.key !== ']'	&& char.key !== '='	&& char.key !== '-'	&& char.key !== '`'	&& char.key !== '/'	&& char.key !== '!'	&& char.key !== '@'	&& char.key !== '#'	&& char.key !== '$'	&& char.key !== '%'	&& char.key !== '^'	&& char.key !== '&'	&& char.key !== '*'	&& char.key !== '('	&& char.key !== ')'	&& char.key !== '~')                 
-                {   
+                if (isGameon && char.keyCode >= 65 && char.keyCode <= 90) {   
                     applyGuess(char)
                     if (guessExist(char)) {
                         if (guessExist(char) && globalList.indexOf(char.key) < 0) {
                             badGuessess ++
+                            guessesRemaining()
                         }
                         guesses.push(char.key)
                         document.querySelector("#gameStatus").innerHTML = "Game is LIVE. Good Luck!"
                         document.querySelector("#guesses").innerHTML = getGuesses()
-                        guessesRemaining()
                         checkWin()
                         }                    
                     else {
-                        window.alert("Bro are you dumb?")
+                        window.alert("Kindly select a character that has not been selected ...")
                     }
                 }
                 else if (isGameon === false) {
